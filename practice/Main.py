@@ -29,8 +29,8 @@ with open("resources/tinyTwitter(3).json") as twitter:
         if line[-2] == ",":
             line = line[:-2]
         info_json = json.loads(line)
-        x = info_json["value"]["geometry"]["coordinates"][0]
-        y = info_json["value"]["geometry"]["coordinates"][1]
+        x = info_json["doc"]["coordinates"]["coordinates"][0]
+        y = info_json["doc"]["coordinates"]["coordinates"][1]
         tags_list = info_json["doc"]["entities"]["hashtags"]
         if x and y:
             location = checkLocation.getLocation(x, y)
