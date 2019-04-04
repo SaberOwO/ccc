@@ -7,8 +7,8 @@ class readTwitter:
 
     def __init__(self):
         self.checkLocation = checkLocation()
-        with open('resources/bigTwitter.json') as f:
-            json_dict = json.loads(f.read())
+        with open('resources/tinyTwitter(3).json') as f:
+            json_dict = json.loads(f.readline())
         self.json_context = json_dict["rows"]
         self.numberCounter = []
         self.tags_dict = {}
