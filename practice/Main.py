@@ -1,9 +1,7 @@
 import json
 from CheckLocation import checkLocation
 from collections import Counter
-from ReadTwitter import readTwitter
 import time
-
 start_time = time.time()
 # readTwitter = readTwitter()
 # readTwitter.readingInfo()
@@ -29,19 +27,21 @@ with open("resources/tinyTwitter(3).json") as twitter:
         if line[-2] == ",":
             line = line[:-2]
         info_json = json.loads(line)
-        x = info_json["doc"]["coordinates"]["coordinates"][0]
-        y = info_json["doc"]["coordinates"]["coordinates"][1]
-        tags_list = info_json["doc"]["entities"]["hashtags"]
-        if x and y:
-            location = checkLocation.getLocation(x, y)
-            if location:
-                numberCounter.append(location)
-            if tags_list and location:
-                for tags in tags_list:
-                    if location not in tags_dict.keys():
-                        tags_dict[location] = [tags["text"].lower()]
-                    else:
-                        tags_dict[location].append(tags["text"].lower())
+        if info_json["doc"]["coordinates"]["coordinates"][0] and info_json["doc"]["coordinates"]["coordinates"][1]:
+            x = info_json["doc"]["coordinates"]["coordinates"][0]
+            y = info_json["doc"]["coordinates"]["coordinates"][1]
+            tags_list = info_json["doc"]["entities"]["hashtags"]
+            if x and y:
+                location = checkLocation.getLocation(x, y)
+                if location:
+                    numberCounter.append(location)
+                    if tags_list:
+                        for tags in tags_list:
+                            if location not in tags_dict.keys():
+                                tags_dict[location] = [tags["text"].lower()]
+                            else:
+                                tags_dict[location].append(tags["text"].lower())
+
 countNumber = Counter(numberCounter)
 for key, value in countNumber.most_common():
     print(str(key) + ": " + str(value) + " posts,")
