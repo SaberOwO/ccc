@@ -1,4 +1,5 @@
 import json
+from contextlib import suppress
 from CheckLocation import checkLocation
 from collections import Counter
 import time
@@ -20,17 +21,14 @@ start_time = time.time()
 numberCounter = []
 tags_dict = {}
 checkLocation = checkLocation()
-count = 0
-with open("resources/tinyTwitter(3).json") as twitter:
+with open("ccc/practice/resources/tinyTwitter(3).json") as twitter:
     for line in twitter:
-        print(count)
-        count = count + 1
         if line[2: 4] != "id":
             continue
         if line[-2] == ",":
             line = line[:-2]
         info_json = json.loads(line)
-        if info_json["doc"]["coordinates"]["coordinates"]:
+        with suppress(Exception):
             x = info_json["doc"]["coordinates"]["coordinates"][0]
             y = info_json["doc"]["coordinates"]["coordinates"][1]
             tags_list = info_json["doc"]["entities"]["hashtags"]
