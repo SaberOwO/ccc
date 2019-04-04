@@ -4,7 +4,7 @@ class readingGrid:
 
     def __init__(self):
         self.dict_location = {}
-        with open('resources/melbGrid(1).json') as grib:
+        with open('resources/melbGrid.json') as grib:
             tempo = json.loads(grib.read())
         self.location_info = tempo["features"]
 

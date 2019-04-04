@@ -7,7 +7,7 @@ class readTwitter:
 
     def __init__(self):
         self.checkLocation = checkLocation()
-        with open('resources/tinyTwitter(3).json') as f:
+        with open('resources/bigTwitter.json') as f:
             json_dict = json.loads(f.read())
         self.json_context = json_dict["rows"]
         self.numberCounter = []
@@ -25,6 +25,6 @@ class readTwitter:
                 if tags_list and location:
                     for tags in tags_list:
                         if location not in self.tags_dict.keys():
-                            self.tags_dict[location] = [tags["text"]]
+                            self.tags_dict[location] = [tags["text"].lower()]
                         else:
-                            self.tags_dict[location].append(tags["text"])
+                            self.tags_dict[location].append(tags["text"].lower())

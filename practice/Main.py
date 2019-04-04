@@ -1,6 +1,8 @@
 from collections import Counter
 from ReadTwitter import readTwitter
+import time
 
+start_time = time.time()
 readTwitter = readTwitter()
 readTwitter.readingInfo()
 countNumber = Counter(readTwitter.numberCounter)
@@ -15,4 +17,5 @@ for key in readTwitter.tags_dict:
         print("(#" + str(key) + ", " + str(value) + "),", end=""),
     print(")")
 print("Down to the top 5 hashtags in the grid cell with the least number of posts;")
-/Users/xinyanhuang/PycharmProjects/practice/resources/tinyTwitter(3).json
+end_time = time.time()
+print(end_time - start_time)
