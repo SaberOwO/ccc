@@ -3,25 +3,42 @@ from contextlib import suppress
 from CheckLocation import checkLocation
 from collections import Counter
 import time
+
 start_time = time.time()
-# readTwitter = readTwitter()
-# readTwitter.readingInfo()
-# countNumber = Counter(readTwitter.numberCounter)
-# for key, value in countNumber.most_common():
-#     print(str(key) + ": " + str(value) + " posts,")
-# print("Down to the square with the least number of posts;")
-# print()
-# for key in readTwitter.tags_dict:
-#     tagCounter = Counter(readTwitter.tags_dict[key]).most_common(5)
-#     print(str(key) + ": (", end=""),
-#     for key, value in tagCounter:
-#         print("(#" + str(key) + ", " + str(value) + "),", end=""),
-#     print(")")
-# print("Down to the top 5 hashtags in the grid cell with the least number of posts;")
 numberCounter = []
 tags_dict = {}
 checkLocation = checkLocation()
-with open("ccc/practice/resources/tinyTwitter(3).json") as twitter:
+
+
+def searchTags(sentence, location):
+    start = 0
+    end = -1
+    if sentence[0] == " ":
+        start = 0
+    if sentence[-1] == " ":
+        end = len(sentence)
+    for word in sentence[start: end]:
+        if word[0] == "#":
+            if location not in tags_dict.keys():
+                tags_dict[location] = [word.lower()]
+            else:
+                tags_dict[location].append(word.lower())
+
+# def countTopFive(tagCounter):
+#     count = 0
+#     list_tempo = []
+#     max_tempo = tagCounter[0][1]
+#     for k, v in tagCounter:
+#         if count >= 5:
+#             break
+#         if v < max_tempo:
+#             count = count + 1
+#             max_tempo = v
+#         list_tempo.append(k + ", " + str(v))
+#     return list_tempo
+
+
+with open("ccc/practice/resources/bigTwitter.json") as twitter:
     for line in twitter:
         if line[2: 4] != "id":
             continue
@@ -31,17 +48,12 @@ with open("ccc/practice/resources/tinyTwitter(3).json") as twitter:
         with suppress(Exception):
             x = info_json["doc"]["coordinates"]["coordinates"][0]
             y = info_json["doc"]["coordinates"]["coordinates"][1]
-            tags_list = info_json["doc"]["entities"]["hashtags"]
+            text = info_json["doc"]["text"]
             if x and y:
                 location = checkLocation.getLocation(x, y)
                 if location:
                     numberCounter.append(location)
-                    if tags_list:
-                        for tags in tags_list:
-                            if location not in tags_dict.keys():
-                                tags_dict[location] = [tags["text"].lower()]
-                            else:
-                                tags_dict[location].append(tags["text"].lower())
+                    searchTags(text.split(" "), location)
 
 countNumber = Counter(numberCounter)
 for key, value in countNumber.most_common():
@@ -52,8 +64,13 @@ for key in tags_dict:
     tagCounter = Counter(tags_dict[key]).most_common(5)
     print(str(key) + ": (", end=""),
     for key, value in tagCounter:
-        print("(#" + str(key) + ", " + str(value) + "),", end=""),
+        print("(" + str(key) + ", " + str(value) + "),", end=""),
     print(")")
 print("Down to the top 5 hashtags in the grid cell with the least number of posts;")
 end_time = time.time()
 print(end_time - start_time)
+# for key in tags_dict:
+#     tagCounter = Counter(tags_dict[key]).most_common()
+#     print("(" + str(key) + ": (", end="")
+#     print(countTopFive(tagCounter), end="")
+#     print(")")
