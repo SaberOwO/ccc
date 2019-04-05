@@ -10,8 +10,21 @@ tags_dict = {}
 checkLocation = checkLocation()
 
 
+def countTopFive(tagCounter):
+    tempo = tagCounter[0][1]
+    counter = 1
+    list_1 = []
+    for k, v in tagCounter:
+        if tempo > v:
+            tempo = v
+            counter = counter + 1
+        if counter > 5:
+            break
+        list_1.append([str(k), str(v)])
+    return list_1
+
 def searchTags(sentence, location):
-    start = 0
+    start = 1
     end = -1
     if sentence[0] == " ":
         start = 0
@@ -23,19 +36,6 @@ def searchTags(sentence, location):
                 tags_dict[location] = [word.lower()]
             else:
                 tags_dict[location].append(word.lower())
-
-# def countTopFive(tagCounter):
-#     count = 0
-#     list_tempo = []
-#     max_tempo = tagCounter[0][1]
-#     for k, v in tagCounter:
-#         if count >= 5:
-#             break
-#         if v < max_tempo:
-#             count = count + 1
-#             max_tempo = v
-#         list_tempo.append(k + ", " + str(v))
-#     return list_tempo
 
 
 with open("ccc/practice/resources/bigTwitter.json") as twitter:
@@ -60,17 +60,20 @@ for key, value in countNumber.most_common():
     print(str(key) + ": " + str(value) + " posts,")
 print("Down to the square with the least number of posts;")
 print()
-for key in tags_dict:
-    tagCounter = Counter(tags_dict[key]).most_common(5)
-    print(str(key) + ": (", end=""),
-    for key, value in tagCounter:
-        print("(" + str(key) + ", " + str(value) + "),", end=""),
-    print(")")
-print("Down to the top 5 hashtags in the grid cell with the least number of posts;")
-end_time = time.time()
-print(end_time - start_time)
 # for key in tags_dict:
-#     tagCounter = Counter(tags_dict[key]).most_common()
-#     print("(" + str(key) + ": (", end="")
-#     print(countTopFive(tagCounter), end="")
+#     tagCounter = Counter(tags_dict[key]).most_common(5)
+#     print(str(key) + ": (", end=""),
+#     for key, value in tagCounter:
+#         print("(" + str(key) + ", " + str(value) + "),", end=""),
 #     print(")")
+# print("Down to the top 5 hashtags in the grid cell with the least number of posts;")
+# end_time = time.time()
+# print(end_time - start_time)
+for key in tags_dict:
+    tagCounter = Counter(tags_dict[key]).most_common()
+    list_topFive = countTopFive(tagCounter)
+    print(str(key) + ": (", end="")
+    for info in list_topFive[0: len(list_topFive) - 1]:
+        print("(" + str(info[0]) + ", " + str(info[1]) + "),", end="")
+    print("(" + str(list_topFive[-1][0]) + ", " + str(list_topFive[-1][1]) + "))")
+
