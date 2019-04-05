@@ -14,3 +14,4 @@ class readingGrid:
             xRange = (list["properties"]["xmin"], list["properties"]["xmax"])
             yRange = (list["properties"]["ymin"], list["properties"]["ymax"])
             self.dict_location[name] = (xRange, yRange)
+

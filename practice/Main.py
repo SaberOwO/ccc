@@ -23,14 +23,15 @@ def countTopFive(tagCounter):
         list_1.append([str(k), str(v)])
     return list_1
 
-def searchTags(sentence, location):
+def searchTags(text, location):
     start = 1
-    end = -1
-    if sentence[0] == " ":
+    end = -2
+    word_list = text.split()
+    if text[0] == " ":
         start = 0
-    if sentence[-1] == " ":
-        end = len(sentence)
-    for word in sentence[start: end]:
+    if text[-1] == " ":
+        end = -1
+    for word in word_list[start: end]:
         if word[0] == "#":
             if location not in tags_dict.keys():
                 tags_dict[location] = [word.lower()]
@@ -53,7 +54,7 @@ with open("ccc/practice/resources/bigTwitter.json") as twitter:
                 location = checkLocation.getLocation(x, y)
                 if location:
                     numberCounter.append(location)
-                    searchTags(text.split(" "), location)
+                    searchTags(text, location)
 
 countNumber = Counter(numberCounter)
 for key, value in countNumber.most_common():
@@ -67,13 +68,12 @@ print()
 #         print("(" + str(key) + ", " + str(value) + "),", end=""),
 #     print(")")
 # print("Down to the top 5 hashtags in the grid cell with the least number of posts;")
-# end_time = time.time()
-# print(end_time - start_time)
 for key in tags_dict:
     tagCounter = Counter(tags_dict[key]).most_common()
     list_topFive = countTopFive(tagCounter)
     print(str(key) + ": (", end="")
     for info in list_topFive[0: len(list_topFive) - 1]:
-        print("(" + str(info[0]) + ", " + str(info[1]) + "),", end="")
+        print("(" + str(info[0]) + "," + str(info[1]) + "),", end="")
     print("(" + str(list_topFive[-1][0]) + ", " + str(list_topFive[-1][1]) + "))")
-
+end_time = time.time()
+print(end_time - start_time)
