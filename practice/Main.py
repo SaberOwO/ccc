@@ -25,12 +25,12 @@ def countTopFive(tagCounter):
 
 def searchTags(text, location):
     start = 1
-    end = -2
+    end = -1
     word_list = text.split()
     if text[0] == " ":
         start = 0
     if text[-1] == " ":
-        end = -1
+        end = len(word_list)
     for word in word_list[start: end]:
         if word[0] == "#":
             if location not in tags_dict.keys():
