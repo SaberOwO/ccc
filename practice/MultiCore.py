@@ -47,7 +47,7 @@ def searchTags(text, location):
 
 
 if comm_rank == 0:
-    # start_time = time.time()
+    start_time = time.time()
     with open("resources/tinyTwitter(3).json") as twitter:
         for line in twitter:
             package.append(line)
@@ -91,7 +91,7 @@ newNumberCounter = comm.gather(numberCounter, root=0)
 newTags_dict = comm.gather(tags_dict, root=0)
 
 if comm_rank == 0:
-    start_time = time.time()
+    start_time_gather = time.time()
     for i in range(1, comm_size):
         for info in newNumberCounter[i]:
             numberCounterList.append(info)
@@ -109,4 +109,5 @@ if comm_rank == 0:
     TagNumber = printTagNumber(tags_dictFinal)
     TagNumber.printIt()
     end_time = time.time()
-    print(end_time - start_time)
+    print("gather time: " + str(end_time - start_time_gather))
+    print("total time: " + str(end_time - start_time))
