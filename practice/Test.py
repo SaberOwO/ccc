@@ -14,43 +14,37 @@ rank1 = 1
 finallyList=[]
 
 
-dict1 = {"a": "1", "b": "1"}
-dict2 = {"a": "2", "b": "1"}
-from collections import Counter
-X,Y=Counter(dict1),Counter(dict2)
-z=dict(X+Y)
 
 
-#
-# if comm_rank == 0:
-#     for infos in testingData:
-#         for info in infos:
-#             package.append(info)
-#         if len(package) == 4:
-#             comm.send(package, dest=rank1%comm_size)
-#             rank1 = rank1 + 1
-#             if rank1 == comm_size:
-#                 rank1 = 1
-#             package.clear()
-#     comm.send(package, dest=1)
-#     flag = False
-#     for i in range(1, comm_size):
-#         comm.send(flag, dest=i)
-#
-# if comm_rank > 0:
-#     while(True):
-#         data_recv = comm.recv(source=0)
-#         if data_recv == False:
-#             break
-#         for info in data_recv:
-#             hehe.append(info)
-# print("my rank is %d, I received :" % comm_rank)
-# newData = comm.gather(hehe, root = 0)
-# if comm_rank == 0:
-#     for infos in newData:
-#         for info in infos:
-#             cyx.append(info)
-#     print(cyx)
+if comm_rank == 0:
+    for infos in testingData:
+        for info in infos:
+            package.append(info)
+        if len(package) == 4:
+            comm.send(package, dest=rank1%comm_size)
+            rank1 = rank1 + 1
+            if rank1 == comm_size:
+                rank1 = 1
+            package.clear()
+    comm.send(package, dest=1)
+    flag = False
+    for i in range(1, comm_size):
+        comm.send(flag, dest=i)
+
+if comm_rank > 0:
+    while(True):
+        data_recv = comm.recv(source=0)
+        if data_recv == False:
+            break
+        for info in data_recv:
+            hehe.append(info)
+print("my rank is %d, I received :" % comm_rank)
+newData = comm.gather(hehe, root = 0)
+if comm_rank == 0:
+    for infos in newData:
+        for info in infos:
+            cyx.append(info)
+    print(cyx)
 
 
 #

@@ -4,10 +4,12 @@ from CheckLocation import checkLocation
 from printTagNumber import printTagNumber
 import time
 from printTwitterNumber import printTwitterNumber
-start_time = time.time()
+
 numberCounter = []
 tags_dict = {}
 checkLocation = checkLocation()
+
+start_time = time.time()
 
 def searchTags(text, location):
     start = 1

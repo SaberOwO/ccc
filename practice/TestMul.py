@@ -18,6 +18,9 @@ rank1 = 1
 numberCounterList = []
 tags_dictFinal = {}
 
+if comm_rank == 0:
+    start_time = time.time()
+
 
 def countTopFive(tagCounter):
     tempo = tagCounter[0][1]
@@ -31,6 +34,7 @@ def countTopFive(tagCounter):
             break
         list_1.append([str(k), str(v)])
     return list_1
+
 
 def searchTags(text, location):
     start = 1
@@ -48,46 +52,26 @@ def searchTags(text, location):
                 tags_dict[location].append(word.lower())
 
 
-if comm_rank == 0:
-    start_time = time.time()
-    with open("resources/tinyTwitter(3).json") as twitter:
-        for line in twitter:
-            if line[2: 4] != "id":
-                continue
-            if line[-2] == ",":
-                line = line[:-2]
-            package.append(line)
-            if len(package) == 50:
-                comm.send(package, dest=rank1 % comm_size)
-                rank1 = rank1 + 1
-                if rank1 == comm_size:
-                    rank1 = 1
-                package.clear()
-    comm.send(package, dest=1)
-    flag = False
-    for i in range(1, comm_size):
-        comm.send(flag, dest=i)
-
-
-if comm_rank > 0:
-    while True:
-        data_recv = comm.recv(source=0)
-        if data_recv == False:
-            break
+with open("resources/tinyTwitter(3).json") as twitter:
+    for line in twitter:
+        if line[2: 4] != "id":
+            continue
+        if line[-2] == ",":
+            line = line[:-2]
+        info_json = json.loads(line)
         with suppress(Exception):
-            for info in data_recv:
-                info_json = json.loads(info)
-                x = info_json["doc"]["coordinates"]["coordinates"][0]
-                y = info_json["doc"]["coordinates"]["coordinates"][1]
-                text = info_json["doc"]["text"]
-                if x and y:
-                    location = checkLocation.getLocation(x, y)
-                    if location:
-                        numberCounter.append(location)
-                        searchTags(text, location)
+            x = info_json["doc"]["coordinates"]["coordinates"][0]
+            y = info_json["doc"]["coordinates"]["coordinates"][1]
+            text = info_json["doc"]["text"]
+            if x and y:
+                location = checkLocation.getLocation(x, y)
+                if location:
+                    numberCounter.append(location)
+                    searchTags(text, location)
 
 newNumberCounter = comm.gather(numberCounter, root=0)
 newTags_dict = comm.gather(tags_dict, root=0)
+
 
 if comm_rank == 0:
     for i in range(1, comm_size):
@@ -107,4 +91,5 @@ if comm_rank == 0:
     TagNumber = printTagNumber(tags_dictFinal)
     TagNumber.printIt()
     end_time = time.time()
-    print(end_time - start_time)
+    print(end_time-start_time)
+
