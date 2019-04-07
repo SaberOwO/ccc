@@ -1,6 +1,6 @@
 import mpi4py.MPI as MPI
 import json
-# from contextlib import suppress
+from contextlib import suppress
 from CheckLocation import checkLocation
 from printTwitterNumber import printTwitterNumber
 from printTagNumber import printTagNumber
@@ -12,8 +12,6 @@ comm_size = comm.Get_size()
 package = []
 numberCounter = []
 tags_dict = {}
-checkLocation = checkLocation()
-
 rank1 = 1
 numberCounterList = []
 tags_dictFinal = {}
@@ -49,8 +47,8 @@ def searchTags(text, location):
 
 
 if comm_rank == 0:
-    start_time = time.time()
-    with open("ccc/practice/resources/bigTwitter.json", "r") as twitter:
+    # start_time = time.time()
+    with open("resources/tinyTwitter(3).json") as twitter:
         for line in twitter:
             package.append(line)
             if len(package) == 15:
@@ -58,7 +56,7 @@ if comm_rank == 0:
                 rank1 = rank1 + 1
                 if rank1 == comm_size:
                     rank1 = 1
-                package=[]
+                package.clear()
     comm.send(package, dest=1)
     flag = False
     for i in range(1, comm_size):
@@ -67,31 +65,33 @@ if comm_rank == 0:
 
 
 if comm_rank > 0:
+    checkLocation = checkLocation()
     while True:
         data_recv = comm.recv(source=0)
         if data_recv == False:
             break
-        # with suppress(Exception):
-        for info in data_recv:
-            if info[2: 4] != "id":
-                continue
-            if info[-2] == ",":
-                info = info[:-2]
-            info_json = json.loads(info)
-            x = info_json["doc"]["coordinates"]["coordinates"][0]
-            y = info_json["doc"]["coordinates"]["coordinates"][1]
-            text = info_json["doc"]["text"]
-            if x and y:
-                location = checkLocation.getLocation(x, y)
-                if location:
-                    numberCounter.append(location)
-                    searchTags(text, location)
+        with suppress(Exception):
+            for info in data_recv:
+                if info[2: 4] != "id":
+                    continue
+                if info[-2] == ",":
+                    info = info[:-2]
+                info_json = json.loads(info)
+                x = info_json["doc"]["coordinates"]["coordinates"][0]
+                y = info_json["doc"]["coordinates"]["coordinates"][1]
+                text = info_json["doc"]["text"]
+                if x and y:
+                    location = checkLocation.getLocation(x, y)
+                    if location:
+                        numberCounter.append(location)
+                        searchTags(text, location)
 
 
 newNumberCounter = comm.gather(numberCounter, root=0)
 newTags_dict = comm.gather(tags_dict, root=0)
 
 if comm_rank == 0:
+    start_time = time.time()
     for i in range(1, comm_size):
         for info in newNumberCounter[i]:
             numberCounterList.append(info)
