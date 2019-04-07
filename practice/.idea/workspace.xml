@@ -65,8 +65,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MultiCore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="67" column="58" selection-start-line="67" selection-start-column="58" selection-end-line="67" selection-end-column="58" />
+            <state relative-caret-position="166">
+              <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -373,23 +373,23 @@
       <workItem from="1554351887267" duration="444000" />
       <workItem from="1554353423514" duration="9958000" />
       <workItem from="1554442721388" duration="8138000" />
-      <workItem from="1554467564665" duration="41369000" />
+      <workItem from="1554467564665" duration="42427000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91367000" />
+    <option name="totallyTimeSpent" value="92425000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="438" y="23" width="1680" height="966" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4987593" visible="true" weight="0.22405373" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.5012407" side_tool="true" visible="true" weight="0.22405373" />
+      <window_info id="Structure" order="1" sideWeight="0.5012407" side_tool="true" visible="true" weight="0.22405373" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.5389016" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5389016" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3993135" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -542,8 +542,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MultiCore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="67" column="58" selection-start-line="67" selection-start-column="58" selection-end-line="67" selection-end-column="58" />
+        <state relative-caret-position="166">
+          <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
