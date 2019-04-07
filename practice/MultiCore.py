@@ -13,7 +13,6 @@ comm_size = comm.Get_size()
 numberCounter = []
 tags_dict = {}
 checkLocation = checkLocation()
-package = []
 rank1 = 1
 numberCounterList = []
 tags_dictFinal = {}
@@ -50,15 +49,15 @@ def searchTags(text, location):
 
 if comm_rank == 0:
     start_time = time.time()
-    with open("resources/tinyTwitter(3).json") as twitter:
+    with open("ccc/practice/resources/bigTwitter.json") as twitter:
         for line in twitter:
+            package = []
             package.append(line)
             if len(package) == 10:
                 comm.send(package, dest=rank1 % comm_size)
                 rank1 = rank1 + 1
                 if rank1 == comm_size:
                     rank1 = 1
-                package.clear()
     comm.send(package, dest=1)
     flag = False
     for i in range(1, comm_size):
