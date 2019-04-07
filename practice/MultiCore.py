@@ -52,12 +52,8 @@ if comm_rank == 0:
     start_time = time.time()
     with open("resources/tinyTwitter(3).json") as twitter:
         for line in twitter:
-            if line[2: 4] != "id":
-                continue
-            if line[-2] == ",":
-                line = line[:-2]
             package.append(line)
-            if len(package) == 50:
+            if len(package) == 10:
                 comm.send(package, dest=rank1 % comm_size)
                 rank1 = rank1 + 1
                 if rank1 == comm_size:
@@ -76,6 +72,10 @@ if comm_rank > 0:
             break
         with suppress(Exception):
             for info in data_recv:
+                if info[2: 4] != "id":
+                    continue
+                if info[-2] == ",":
+                    info = info[:-2]
                 info_json = json.loads(info)
                 x = info_json["doc"]["coordinates"]["coordinates"][0]
                 y = info_json["doc"]["coordinates"]["coordinates"][1]
