@@ -5,6 +5,7 @@ from CheckLocation import checkLocation
 from printTwitterNumber import printTwitterNumber
 from printTagNumber import printTagNumber
 import time
+from itertools import islice
 
 comm = MPI.COMM_WORLD
 comm_rank = comm.Get_rank()
@@ -46,28 +47,42 @@ def searchTags(text, location):
                 tags_dict[location].append(word.lower())
 
 
+# if comm_rank == 0:
+#     start_time = time.time()
+#     with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
+#         for line in twitter:
+#             package.append(line)
+#             if len(package) == 15:
+#                 comm.send(package, dest=rank1, tag=3)
+#                 rank1 = rank1 + 1
+#                 if rank1 == comm_size:
+#                     rank1 = 1
+#                 package.clear()
+#     comm.send(package, dest=1, tag=3)
+#     flag = False
+#     for i in range(1, comm_size):
+#         comm.send(flag, dest=i, tag=3)
+
 if comm_rank == 0:
     start_time = time.time()
-    with open("resources/tinyTwitter(3).json") as twitter:
-        for line in twitter:
-            package.append(line)
-            if len(package) == 15:
-                comm.send(package, dest=rank1)
-                rank1 = rank1 + 1
-                if rank1 == comm_size:
-                    rank1 = 1
-                package.clear()
-    comm.send(package, dest=1)
+    with open("ccc/practice/resources/bigTwitter.json", "r", encoding="utf-8") as twitter:
+        lines = list(islice(twitter, 10))
+        while lines:
+            comm.send(lines, dest=rank1, tag=3)
+            if rank1 == comm_size:
+                rank1 = 1
+            lines = list(islice(twitter, 10))
     flag = False
     for i in range(1, comm_size):
-        comm.send(flag, dest=i)
+        comm.send(flag, dest=i, tag=3)
+
 
 
 
 if comm_rank > 0:
     checkLocation = checkLocation()
     while True:
-        data_recv = comm.recv(source=0)
+        data_recv = comm.recv(source=0, tag=3)
         if data_recv == False:
             break
         with suppress(Exception):
