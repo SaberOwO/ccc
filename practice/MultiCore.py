@@ -47,34 +47,34 @@ def searchTags(text, location):
                 tags_dict[location].append(word.lower())
 
 
-# if comm_rank == 0:
-#     start_time = time.time()
-#     with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
-#         for line in twitter:
-#             package.append(line)
-#             if len(package) == 15:
-#                 comm.send(package, dest=rank1, tag=3)
-#                 rank1 = rank1 + 1
-#                 if rank1 == comm_size:
-#                     rank1 = 1
-#                 package.clear()
-#     comm.send(package, dest=1, tag=3)
-#     flag = False
-#     for i in range(1, comm_size):
-#         comm.send(flag, dest=i, tag=3)
-
 if comm_rank == 0:
     start_time = time.time()
-    with open("ccc/practice/resources/bigTwitter.json", "r", encoding="utf-8") as twitter:
-        lines = list(islice(twitter, 10))
-        while lines:
-            comm.send(lines, dest=rank1, tag=3)
-            if rank1 == comm_size:
-                rank1 = 1
-            lines = list(islice(twitter, 10))
+    with open("ccc/practice/resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
+        for line in twitter:
+            package.append(line)
+            if len(package) == 1:
+                comm.send(package, dest=rank1, tag=3)
+                rank1 = rank1 + 1
+                if rank1 == comm_size:
+                    rank1 = 1
+                package.clear()
+    comm.send(package, dest=1, tag=3)
     flag = False
     for i in range(1, comm_size):
         comm.send(flag, dest=i, tag=3)
+
+# if comm_rank == 0:
+#     start_time = time.time()
+#     with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
+#         lines = list(islice(twitter, 1000))
+#         while lines:
+#             comm.send(lines, dest=rank1, tag=3)
+#             if rank1 == comm_size:
+#                 rank1 = 1
+#             lines = list(islice(twitter, 10))
+#     flag = False
+#     for i in range(1, comm_size):
+#         comm.send(flag, dest=i, tag=3)
 
 
 
