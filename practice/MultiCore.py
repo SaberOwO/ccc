@@ -92,12 +92,14 @@ if comm_rank > 0:
                 if info[-2] == ",":
                     info = info[:-2]
                 info_json = json.loads(info)
-                if info_json["doc"]["coordinates"]["coordinates"]:
-                    x = info_json["doc"]["coordinates"]["coordinates"][0]
-                    y = info_json["doc"]["coordinates"]["coordinates"][1]
-                else:
-                    x = info_json["doc"]["geo"]["coordinates"][1]
-                    y = info_json["doc"]["geo"]["coordinates"][0]
+                x = info_json["doc"]["coordinates"]["coordinates"][0]
+                y = info_json["doc"]["coordinates"]["coordinates"][1]
+                # if info_json["doc"]["coordinates"]["coordinates"]:
+                #     x = info_json["doc"]["coordinates"]["coordinates"][0]
+                #     y = info_json["doc"]["coordinates"]["coordinates"][1]
+                # else:
+                #     x = info_json["doc"]["geo"]["coordinates"][1]
+                #     y = info_json["doc"]["geo"]["coordinates"][0]
                 text = info_json["doc"]["text"]
                 if x and y:
                     location = checkLocation.getLocation(x, y)
