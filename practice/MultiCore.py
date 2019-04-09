@@ -1,12 +1,10 @@
 import mpi4py.MPI as MPI
 import json
-from contextlib import suppress
 from CheckLocation import checkLocation
 from printTwitterNumber import printTwitterNumber
 from printTagNumber import printTagNumber
 import time
-from ReadGrid import readingGrid
-from itertools import islice
+
 
 comm = MPI.COMM_WORLD
 comm_rank = comm.Get_rank()
@@ -63,22 +61,6 @@ if comm_rank == 0:
     flag = False
     for i in range(1, comm_size):
         comm.send(flag, dest=i, tag=3)
-
-# if comm_rank == 0:
-#     start_time = time.time()
-#     with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
-#         lines = list(islice(twitter, 1000))
-#         while lines:
-#             comm.send(lines, dest=rank1, tag=3)
-#             if rank1 == comm_size:
-#                 rank1 = 1
-#             lines = list(islice(twitter, 10))
-#     flag = False
-#     for i in range(1, comm_size):
-#         comm.send(flag, dest=i, tag=3)
-
-
-
 
 if comm_rank > 0:
     checkLocation = checkLocation()

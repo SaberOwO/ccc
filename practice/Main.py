@@ -1,5 +1,4 @@
 import json
-from contextlib import suppress
 from CheckLocation import checkLocation
 from printTagNumber import printTagNumber
 import time
@@ -34,15 +33,20 @@ with open("resources/tinyTwitter(3).json") as twitter:
         if line[-2] == ",":
             line = line[:-2]
         info_json = json.loads(line)
-        with suppress(Exception):
+        if info_json["doc"]["coordinates"]:
             x = info_json["doc"]["coordinates"]["coordinates"][0]
             y = info_json["doc"]["coordinates"]["coordinates"][1]
-            text = info_json["doc"]["text"]
-            if x and y:
-                location = checkLocation.getLocation(x, y)
-                if location:
-                    numberCounter.append(location)
-                    searchTags(text, location)
+        elif info_json["doc"]["geo"]:
+            x = info_json["doc"]["geo"]["coordinates"][1]
+            y = info_json["doc"]["geo"]["coordinates"][0]
+        else:
+            continue
+        text = info_json["doc"]["text"]
+        if x and y:
+            location = checkLocation.getLocation(x, y)
+            if location:
+                numberCounter.append(location)
+                searchTags(text, location)
 
 TwitterNumber = printTwitterNumber(numberCounter)
 TwitterNumber.printIt()
