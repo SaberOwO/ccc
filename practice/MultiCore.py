@@ -5,6 +5,7 @@ from CheckLocation import checkLocation
 from printTwitterNumber import printTwitterNumber
 from printTagNumber import printTagNumber
 import time
+from ReadGrid import readingGrid
 from itertools import islice
 
 comm = MPI.COMM_WORLD
@@ -49,7 +50,7 @@ def searchTags(text, location):
 
 if comm_rank == 0:
     start_time = time.time()
-    with open("ccc/practice/resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
+    with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
         for line in twitter:
             package.append(line)
             if len(package) == 10:
