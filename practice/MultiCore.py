@@ -49,10 +49,10 @@ def searchTags(text, location):
 
 if comm_rank == 0:
     start_time = time.time()
-    with open("ccc/practice/resources/bigTwitter.json", "r", encoding="utf-8") as twitter:
+    with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
         for line in twitter:
             package.append(line)
-            if len(package) == 1:
+            if len(package) == 10:
                 comm.send(package, dest=rank1, tag=3)
                 rank1 = rank1 + 1
                 if rank1 == comm_size:
@@ -85,29 +85,31 @@ if comm_rank > 0:
         data_recv = comm.recv(source=0, tag=3)
         if data_recv == False:
             break
-        with suppress(Exception):
-            for info in data_recv:
-                if info[2: 4] != "id":
-                    continue
-                if info[-2] == ",":
-                    info = info[:-2]
-                info_json = json.loads(info)
+        # with suppress(Exception):
+        for info in data_recv:
+            if info[2: 4] != "id":
+                continue
+            if info[-2] == ",":
+                info = info[:-2]
+            info_json = json.loads(info)
+            # x = info_json["doc"]["coordinates"]["coordinates"][0]
+            # y = info_json["doc"]["coordinates"]["coordinates"][1]
+            if info_json["doc"]["coordinates"]["coordinates"]:
                 x = info_json["doc"]["coordinates"]["coordinates"][0]
                 y = info_json["doc"]["coordinates"]["coordinates"][1]
-                # if info_json["doc"]["coordinates"]["coordinates"]:
-                #     x = info_json["doc"]["coordinates"]["coordinates"][0]
-                #     y = info_json["doc"]["coordinates"]["coordinates"][1]
-                # else:
-                #     x = info_json["doc"]["geo"]["coordinates"][1]
-                #     y = info_json["doc"]["geo"]["coordinates"][0]
-                text = info_json["doc"]["text"]
-                if x and y:
-                    location = checkLocation.getLocation(x, y)
-                    if location:
-                        numberCounter.append(location)
-                        searchTags(text, location)
+            elif info_json["doc"]["geo"]:
+                x = info_json["doc"]["geo"]["coordinates"][1]
+                y = info_json["doc"]["geo"]["coordinates"][0]
+            else:
+                continue
+            text = info_json["doc"]["text"]
+            if x and y:
+                location = checkLocation.getLocation(x, y)
+                if location:
+                    numberCounter.append(location)
+                    searchTags(text, location)
 
-
+comm.barrier()
 newNumberCounter = comm.gather(numberCounter, root=0)
 newTags_dict = comm.gather(tags_dict, root=0)
 
