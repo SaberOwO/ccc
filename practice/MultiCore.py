@@ -97,7 +97,7 @@ if comm_rank > 0:
             if info_json["doc"]["coordinates"]["coordinates"]:
                 x = info_json["doc"]["coordinates"]["coordinates"][0]
                 y = info_json["doc"]["coordinates"]["coordinates"][1]
-            elif info_json["doc"]["geo"]:
+            elif info_json["doc"]["geo"]["coordinates"]:
                 x = info_json["doc"]["geo"]["coordinates"][1]
                 y = info_json["doc"]["geo"]["coordinates"][0]
             else:
