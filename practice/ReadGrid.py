@@ -3,6 +3,7 @@ import json
 class readingGrid:
 
     def __init__(self):
+        self.dict_location_list = []
         self.dict_location = {}
         with open('ccc/practice/resources/melbGrid(1).json') as grib:
             tempo = json.loads(grib.read())
@@ -14,4 +15,5 @@ class readingGrid:
             xRange = (list["properties"]["xmin"], list["properties"]["xmax"])
             yRange = (list["properties"]["ymin"], list["properties"]["ymax"])
             self.dict_location[name] = (xRange, yRange)
+            self.dict_location_list.append(self.dict_location)
 
