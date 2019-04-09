@@ -49,7 +49,7 @@ def searchTags(text, location):
 
 if comm_rank == 0:
     start_time = time.time()
-    with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
+    with open("ccc/practice/resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
         for line in twitter:
             package.append(line)
             if len(package) == 10:
@@ -94,10 +94,10 @@ if comm_rank > 0:
             info_json = json.loads(info)
             # x = info_json["doc"]["coordinates"]["coordinates"][0]
             # y = info_json["doc"]["coordinates"]["coordinates"][1]
-            if info_json["doc"]["coordinates"]["coordinates"]:
+            if info_json["doc"]["coordinates"]:
                 x = info_json["doc"]["coordinates"]["coordinates"][0]
                 y = info_json["doc"]["coordinates"]["coordinates"][1]
-            elif info_json["doc"]["geo"]["coordinates"]:
+            elif info_json["doc"]["geo"]:
                 x = info_json["doc"]["geo"]["coordinates"][1]
                 y = info_json["doc"]["geo"]["coordinates"][0]
             else:
@@ -109,7 +109,6 @@ if comm_rank > 0:
                     numberCounter.append(location)
                     searchTags(text, location)
 
-comm.barrier()
 newNumberCounter = comm.gather(numberCounter, root=0)
 newTags_dict = comm.gather(tags_dict, root=0)
 

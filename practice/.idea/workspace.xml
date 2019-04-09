@@ -26,8 +26,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/tinyTwitter(3).json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="3294" selection-start-line="1" selection-start-column="3283" selection-end-line="1" selection-end-column="3294" />
+            <state relative-caret-position="90">
+              <caret line="6" column="451" selection-start-line="6" selection-start-column="447" selection-end-line="6" selection-end-column="451" />
             </state>
           </provider>
         </entry>
@@ -86,8 +86,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MultiCore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="94" column="58" lean-forward="true" selection-start-line="94" selection-start-column="58" selection-end-line="94" selection-end-column="58" />
+            <state relative-caret-position="334">
+              <caret line="100" column="61" lean-forward="true" selection-start-line="100" selection-start-column="61" selection-end-line="100" selection-end-column="61" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -138,6 +138,9 @@
     <findStrings>
       <find>hashtags</find>
       <find>#</find>
+      <find>coordinates</find>
+      <find>【】</find>
+      <find>null</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -372,12 +375,12 @@
       <workItem from="1554442721388" duration="8138000" />
       <workItem from="1554467564665" duration="44667000" />
       <workItem from="1554700650740" duration="6448000" />
-      <workItem from="1554768639720" duration="915000" />
+      <workItem from="1554768639720" duration="2931000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102028000" />
+    <option name="totallyTimeSpent" value="104044000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="966" extended-state="6" />
@@ -497,13 +500,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReadGrid.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
@@ -511,13 +507,6 @@
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/tinyTwitter(3).json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="3294" selection-start-line="1" selection-start-column="3283" selection-end-line="1" selection-end-column="3294" />
         </state>
       </provider>
     </entry>
@@ -531,10 +520,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/tinyTwitter(3).json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="451" selection-start-line="6" selection-start-column="447" selection-end-line="6" selection-end-column="451" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReadGrid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MultiCore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="94" column="58" lean-forward="true" selection-start-line="94" selection-start-column="58" selection-end-line="94" selection-end-column="58" />
+        <state relative-caret-position="334">
+          <caret line="100" column="61" lean-forward="true" selection-start-line="100" selection-start-column="61" selection-end-line="100" selection-end-column="61" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
