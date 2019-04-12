@@ -17,19 +17,7 @@ numberCounterList = []
 tags_dictFinal = {}
 
 
-def countTopFive(tagCounter):
-    tempo = tagCounter[0][1]
-    counter = 1
-    list_1 = []
-    for k, v in tagCounter:
-        if tempo > v:
-            tempo = v
-            counter = counter + 1
-        if counter > 5:
-            break
-        list_1.append([str(k), str(v)])
-    return list_1
-
+# This method is used to search the tags inside text
 def searchTags(text, location):
     start = 1
     end = -1
@@ -46,6 +34,8 @@ def searchTags(text, location):
                 tags_dict[location].append(word.lower())
 
 
+# The rank 0 is main core as manager. It will read the json file and send the information
+# to other worker.
 if comm_rank == 0:
     start_time = time.time()
     with open("resources/tinyTwitter(3).json", "r", encoding="utf-8") as twitter:
@@ -62,21 +52,21 @@ if comm_rank == 0:
     for i in range(1, comm_size):
         comm.send(flag, dest=i, tag=3)
 
+# Other cores called worker receive the information and put the tags, which are from same grid
+# into one list and encapsulate it into a dictionary. Also, it will return a list with each twitter's
+# location
 if comm_rank > 0:
     checkLocation = checkLocation()
     while True:
         data_recv = comm.recv(source=0, tag=3)
         if data_recv == False:
             break
-        # with suppress(Exception):
         for info in data_recv:
             if info[2: 4] != "id":
                 continue
             if info[-2] == ",":
                 info = info[:-2]
             info_json = json.loads(info)
-            # x = info_json["doc"]["coordinates"]["coordinates"][0]
-            # y = info_json["doc"]["coordinates"]["coordinates"][1]
             if info_json["doc"]["coordinates"]:
                 x = info_json["doc"]["coordinates"]["coordinates"][0]
                 y = info_json["doc"]["coordinates"]["coordinates"][1]
@@ -95,6 +85,7 @@ if comm_rank > 0:
 newNumberCounter = comm.gather(numberCounter, root=0)
 newTags_dict = comm.gather(tags_dict, root=0)
 
+# At last manager will gather all the data from workers. And it will count the data and print out the results.
 if comm_rank == 0:
     for i in range(1, comm_size):
         for info in newNumberCounter[i]:

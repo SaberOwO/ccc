@@ -41,10 +41,10 @@ with open("resources/tinyTwitter(3).json") as twitter:
             y = info_json["doc"]["geo"]["coordinates"][0]
         else:
             continue
-        text = info_json["doc"]["text"]
         if x and y:
             location = checkLocation.getLocation(x, y)
             if location:
+                text = info_json["doc"]["text"]
                 numberCounter.append(location)
                 searchTags(text, location)
 

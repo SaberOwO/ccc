@@ -1,4 +1,5 @@
 import json
+
 # read the melbGrid.json and put the location data into a dictionary
 class readingGrid:
 
